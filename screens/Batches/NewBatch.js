@@ -4,9 +4,16 @@ import {Picker} from '@react-native-picker/picker';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button} from 'react-native-paper';
 import {getMaterial} from '../../features/purchase/materialListSlice';
-import {getMaterialList, postBatchData} from '../../features/Batches/batchSlice';
+import {
+  getMaterialList,
+  postBatchData,
+} from '../../features/Batches/batchSlice';
+import { useNavigation } from '@react-navigation/native';
 export default function NewBatch() {
-  const [materialDetails, setMaterialDetails] = useState([{materialId: ''}]);
+  const navigation=useNavigation()
+  const [materialDetails, setMaterialDetails] = useState([
+    {purchaseAndMaterial: ''},
+  ]);
   const {materialList} = useSelector(state => state.batchList);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -14,7 +21,7 @@ export default function NewBatch() {
     console.log('materialList', materialList);
   }, []);
   const addMaterialBox = () => {
-    setMaterialDetails(preDetail => [...preDetail, {materialId: '',po_id:''}]);
+    setMaterialDetails(preDetail => [...preDetail, {purchaseAndMaterial: ''}]);
   };
   const handleDelete = index => {
     const updatedDetails = [...materialDetails];
@@ -23,17 +30,20 @@ export default function NewBatch() {
   };
   const handleMaterialChange = (value, index) => {
     console.log('value', value);
-    const {po_id,material_id}=value
+    // const {po_id,material_id}=value
     setMaterialDetails(prevDetails => {
       const updatedDetails = [...prevDetails];
-      updatedDetails[index].materialId = material_id;
-      updatedDetails[index].po_id = po_id;
+      updatedDetails[index].purchaseAndMaterial = value;
+      console.log("material",materialDetails)
+      // updatedDetails[index].po_id = po_id;
       return updatedDetails;
     });
   };
-const handleSubmit=()=>{
-  dispatch(postBatchData(materialDetails))
-}
+  const handleSubmit = () => {
+    dispatch(postBatchData(materialDetails));
+  
+    navigation.navigate('Batch')
+  };
   const renderMaterialBoxes = () => {
     return materialDetails.map((item, index) => (
       <View
@@ -57,7 +67,7 @@ const handleSubmit=()=>{
             )}
           </View>
           <Picker
-            selectedValue={item.materialId}
+            selectedValue={item.purchaseAndMaterial}
             onValueChange={value => handleMaterialChange(value, index)}>
             {materialList &&
               materialList.map((data, i) => (
@@ -65,7 +75,7 @@ const handleSubmit=()=>{
                   key={i}
                   name={i}
                   label={`${data.display_id}-${data.supplier_name} (${data.date})`}
-                  value={{po_id:data.po_id,material_id:data.purchase_material_id}}
+                  value={data}
                 />
               ))}
           </Picker>
@@ -104,7 +114,8 @@ const handleSubmit=()=>{
         <Button
           className="bg-green-500 text-lg hover:bg-green-700
      font-bold py-2 px-3 rounded w-full "
-          textColor="white" onPress={handleSubmit}>
+          textColor="white"
+          onPress={handleSubmit}>
           Submit
         </Button>
       </TouchableOpacity>
