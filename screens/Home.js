@@ -32,7 +32,7 @@ const Home=({navigation})=> {
             <Image
               resizeMode="contain"
               style={{ width: 60, height: 70 }}
-              source={require("../assets/green.webp")}
+              source={require("../assets/purchase.jpeg")}
             />
             <Text style={styles.textStyle}>Purchase</Text>
           </TouchableOpacity>
@@ -50,7 +50,7 @@ const Home=({navigation})=> {
             <Image
               resizeMode="contain"
               style={{ width: 60, height: 70 }}
-              source={require("../assets/green.webp")}
+              source={require("../assets/batch.jpg")}
             />
             <Text style={styles.textStyle}>Batch</Text>
           </TouchableOpacity>
@@ -71,7 +71,7 @@ const Home=({navigation})=> {
             <Image
               resizeMode="contain"
               style={{ width: 60, height: 70 }}
-              source={require("../assets/green.webp")}
+              source={require("../assets/segregation.jpg")}
             />
             <Text style={styles.textStyle}>Segregation</Text>
           </TouchableOpacity>

@@ -43,7 +43,11 @@ export const batchSlice=createSlice({
     name:'batchList',
     initialState,
     reducers:{
-        
+        resetMaterialList:(state)=>{
+            state.materialList=[]
+            state.isLoading=false
+            state.isError=false
+        }
     },
     extraReducers:(builder)=>{
         builder.addCase(getBatchList.pending,(state)=>{
@@ -90,4 +94,5 @@ export const batchSlice=createSlice({
         })
     }
 })
+export const {resetMaterialList}=batchSlice.actions;
 export default batchSlice.reducer;

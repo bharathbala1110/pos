@@ -5,112 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBatchList} from '../../features/Batches/batchSlice';
 
-const data = [
-  {
-    batch_id: 1,
-    date: '2024-01-05T09:31:17.000Z',
-    supplier_id: 4,
-    supplier: 'thiru',
-    quantity: '50',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 2,
-    date: '2024-01-08T11:49:47.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '70',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 3,
-    date: '2024-01-09T09:50:13.000Z',
-    supplier_id: 6,
-    supplier: 'moorthy',
-    quantity: '20',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 23,
-    date: '2024-01-10T06:18:27.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 25,
-    date: '2024-01-10T06:20:44.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 28,
-    date: '2024-01-10T06:36:11.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 29,
-    date: '2024-01-10T06:36:21.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 30,
-    date: '2024-01-10T06:38:26.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 31,
-    date: '2024-01-10T06:38:44.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 37,
-    date: '2024-01-10T07:10:41.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 38,
-    date: '2024-01-10T09:56:29.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 39,
-    date: '2024-01-10T09:57:22.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-  {
-    batch_id: 40,
-    date: '2024-01-10T10:06:09.000Z',
-    supplier_id: 5,
-    supplier: 'selvam',
-    quantity: '370',
-    status: 'Segregated',
-  },
-];
+
 
 const Batch = ({navigation}) => {
 
@@ -119,7 +14,7 @@ const {batchList} = useSelector(state => state.batchList)
 useEffect(()=>{
     dispatch(getBatchList())
     console.log(batchList)
-},[])
+},[dispatch])
 
   const Item = ({item}) => (
     
@@ -150,14 +45,7 @@ useEffect(()=>{
         renderItem={({item}) => <Item item={item} />}
         keyExtractor={item => item.batch_id}
       />
-      <View style={styles.fabContainer}>
-        <FAB
-          color="white"
-          icon={() => <Icon name="add" color="white" />}
-          style={styles.fabStyle}
-          onPress={() => navigation.navigate('NewBatch')}
-        />
-      </View>
+     
     </View>
   );
 };

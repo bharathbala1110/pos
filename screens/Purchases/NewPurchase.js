@@ -122,7 +122,7 @@ const NewPurchase = ({navigation, route}) => {
     setSelectedEndMeter(e);
   };
   const handleSupplier = supplier => {
-    
+    console.log("supplier",supplier)
     setSelectedSupplier(supplier);
   };
 

@@ -3,23 +3,30 @@ import React, {useEffect, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button} from 'react-native-paper';
-import {getMaterial} from '../../features/purchase/materialListSlice';
+
 import {
   getMaterialList,
   postBatchData,
+  
 } from '../../features/Batches/batchSlice';
-import { useNavigation } from '@react-navigation/native';
-export default function NewBatch() {
-  const navigation=useNavigation()
-  const [materialDetails, setMaterialDetails] = useState([
-    {purchaseAndMaterial: ''},
-  ]);
-  const {materialList} = useSelector(state => state.batchList);
+
+const NewBatch=({navigation})=> {
+  
   const dispatch = useDispatch();
+
+  
+  const {materialList} = useSelector(state => state.batchList);
+
   useEffect(() => {
     dispatch(getMaterialList());
-    console.log('materialList', materialList);
-  }, []);
+    console.log("materialList",materialList[0])
+    // console.log("use effect",materialList[0].purchaseAndMaterial)
+  }, [dispatch]);
+
+
+  const [materialDetails, setMaterialDetails] = useState([
+    {purchaseAndMaterial: materialList.length>0?materialList[0]:''},
+  ]);
   const addMaterialBox = () => {
     setMaterialDetails(preDetail => [...preDetail, {purchaseAndMaterial: ''}]);
   };
@@ -34,15 +41,15 @@ export default function NewBatch() {
     setMaterialDetails(prevDetails => {
       const updatedDetails = [...prevDetails];
       updatedDetails[index].purchaseAndMaterial = value;
-      console.log("material",materialDetails)
+      console.log('material', materialDetails);
       // updatedDetails[index].po_id = po_id;
       return updatedDetails;
     });
   };
   const handleSubmit = () => {
     dispatch(postBatchData(materialDetails));
-  
-    navigation.navigate('Batch')
+    // dispatch(resetMaterialList())
+    navigation.navigate('Batch');
   };
   const renderMaterialBoxes = () => {
     return materialDetails.map((item, index) => (
@@ -122,3 +129,4 @@ export default function NewBatch() {
     </>
   );
 }
+export default NewBatch;

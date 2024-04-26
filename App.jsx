@@ -13,6 +13,8 @@ import PurchaseSignatory from './screens/Purchases/PurchaseSignatory';
 import {Provider} from 'react-redux';
 import {store} from './store/store';
 import NewBatch from './screens/Batches/NewBatch';
+import Segregation from './screens/Segregation/Segregation';
+import SegregationDetail from './screens/Segregation/SegregationDetail';
 // import PurchaseConfirm from './screens/Purchases/PurchaseConfirm';
 // import PurchaseSignatory from './screens/Purchases/PurchaseSignatory';
 // import "react-native-devsettings";
@@ -28,11 +30,17 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Purchase" component={Purchase} />
           <Stack.Screen name="Batch" component={Batch} />
+          <Stack.Screen name="Segregation" component={Segregation} />
           <Stack.Screen name="NewBatch" component={NewBatch} />
           <Stack.Screen
             name="PurchaseDetails"
             component={Home}
             options={{title: 'Order Details'}}
+          />
+           <Stack.Screen
+            name="SegregationDetail"
+            component={SegregationDetail}
+            options={{title: 'Segregation Detail'}}
           />
           <Stack.Screen
             name="NewPurchase"
@@ -50,6 +58,7 @@ export default function App() {
             component={Material}
             options={{title: 'New Purchase'}}
           />
+          
           {/* <Stack.Screen
           name="PurchaseSignatory"
           component={Home}
