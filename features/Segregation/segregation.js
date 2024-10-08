@@ -2,12 +2,13 @@
 
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { fetchBatchList } from "../../services/segregationService";
+import { fetchBatchById, fetchBatchList } from "../../services/segregationService";
 
 const initialState={
     isLoading:false,
     isError:false,
     segregationBatchList:[],
+    segregationBatchById:[],
     message: ""
 }
 
@@ -17,7 +18,7 @@ export const getSegregationBatchList=createAsyncThunk('segregation/segregationBa
 
     
     const res=await fetchBatchList()
-    //   console.log(res)
+      console.log('segregationBatchList',res)
     return res
     }
     catch(e){
@@ -25,6 +26,16 @@ export const getSegregationBatchList=createAsyncThunk('segregation/segregationBa
     }
 })
 
+export const getSegregationBatchById=createAsyncThunk('segregation/segregationBatchById',async(data,thunkApi)=>{
+    try{
+    const res=await fetchBatchById(data)
+    //   console.log('segregationBatchList',res)
+    return res
+    }
+    catch(e){
+        return thunkApi.rejectWithValue(e.message)
+    }
+})
 
 export const segregationSlice=createSlice({
     name:'segregation',
@@ -46,6 +57,20 @@ export const segregationSlice=createSlice({
             state.isError=true
             state.message=action.payload
             state.segregationBatchList=[]
+        })
+        .addCase(getSegregationBatchById.pending,(state)=>{
+            state.isLoading=true
+        })
+        .addCase(getSegregationBatchById.fulfilled,(state,action)=>{
+            state.isLoading=false
+            state.isSuccess=true
+            state.segregationBatchById=action.payload
+        })
+        .addCase(getSegregationBatchById.rejected,(state,action)=>{
+            state.isLoading=false
+            state.isError=true
+            state.message=action.payload
+            state.segregationBatchById=[]
         })
     }
 })

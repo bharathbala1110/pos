@@ -84,12 +84,12 @@ const Home=({navigation})=> {
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress={() => navigation.navigate("Baling")}
+            onPress={() => navigation.navigate("Bale")}
           >
             <Image
               resizeMode="contain"
               style={{ width: 60, height: 70 }}
-              source={require("../assets/green.webp")}
+              source={require("../assets/bale.png")}
             />
             <Text style={styles.textStyle}>Baling</Text>
           </TouchableOpacity>
@@ -112,7 +112,7 @@ const Home=({navigation})=> {
             <Image
               resizeMode="contain"
               style={{ width: 60, height: 70 }}
-              source={require("../assets/green.webp")}
+              source={require("../assets/sale.png")}
             />
             <Text style={styles.textStyle}>Sales</Text>
           </TouchableOpacity>

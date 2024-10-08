@@ -17,11 +17,15 @@ import {Button, RadioButton} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
 import {Camera, useCameraDevice} from 'react-native-vision-camera';
 import {useDispatch, useSelector} from 'react-redux';
+import RNFS from 'react-native-fs';
 import {
   PurchaseDetail,
+  addPhotoUri,
+  getPostFile,
   postPurchase,
   purchaseDetail,
 } from '../../features/purchase/newPurchaseOrderSlice';
+import axios from 'axios';
 
 // import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
 
@@ -48,13 +52,14 @@ const NewPurchase = ({navigation, route}) => {
   const [vehicle, setVehicle] = useState(vehicles[0]);
   const [photoOption, setPhotoOption] = useState(true);
   const [startCamera, setStartCamera] = useState(false);
+  const [photoBase64, setPhotoBase64] = useState(null);
 
   
   const cameraRef = useRef();
   useEffect(() => {
     checkPermission();
     dispatch(getSupplier());
-    console.log('purchaseDetail', purchaseDetail);
+    // console.log('purchaseDetail', purchaseDetail);
     // console.log('supplier list', supplierList);
     if (startCamera) {
       navigation.setParams({headerShown: false});
@@ -75,14 +80,56 @@ const NewPurchase = ({navigation, route}) => {
     if (cameraRef.current) {
       try {
         const photo = await cameraRef.current.takePhoto({});
+        const result = await fetch(`file://${photo.path}`);
+        const data = await result.blob();
+        const filePath = photo.path;
+        const file = await RNFS.readFile(filePath, 'base64');
+//         console.log("file",file)
+//         const formData = new FormData();
+//         formData.append('photo', {
+//           uri: `file://${photo.path}`,
+//           name: 'photo.jpg',
+//           type: 'image/jpeg',
+//         });
+// //  // Use blob directly
+//         formData.append('name','bharath')
+//         console.log('form', formData);
+//         const response = await axios.post('http://192.168.1.8:2000/api/purchase/uploadImage', formData, {
+//           headers: {
+//             'Content-Type': 'multipart/form-data',
+//           },
+//         });
+
+//         console.log("res",response)
+        // dispatch(getPostFile(formData));
+        dispatch(addPhotoUri(photo.path))
         setPhotoUri(photo.path);
-        console.log(photo.path);
+        // console.log(photo.path);
+
+        // Convert photo to Base64
+        // const base64String = await RNFS.readFile(photo.path, 'base64');
+        // setPhotoBase64(base64String);
+        // console.log(base64String);
         setStartCamera(false);
       } catch (err) {
         console.error('Failed to take photo', err);
       }
     }
   };
+  const sendToServer=async(blob)=>{
+   const formData=new FormData()
+   formData.append('photo',blob,'photo.jpg')
+   
+   console.log("form",formData)
+   dispatch(getPostFile(formData))
+  //  try{
+  //     const res=await axios.post('http://192.168.1.9:2000/api/purchase/upload',formData)
+  //     console.log(res)
+  //  }
+  //  catch(e){
+  //   console.log(e)
+  //  }
+  }
   const nextPage = () => {
     if (selectedProcurementMode == 1) {
       const data = {
@@ -319,6 +366,7 @@ const NewPurchase = ({navigation, route}) => {
             <View style={styles.buttonContainer}>
               <But title="Take Photo" onPress={takePhoto} />
             </View>
+            
           </SafeAreaView>
         </>
       )}

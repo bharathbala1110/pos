@@ -1,22 +1,24 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Picker} from '@react-native-picker/picker';
-import {useDispatch, useSelector} from 'react-redux';
-import {getMaterialList} from '../../features/Batches/batchSlice';
+import { View, Text, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { getSegregationBatchList } from '../../features/Segregation/segregation';
-import { Button, FAB, Icon } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
+import { Button } from 'react-native-paper';
+import { getbaleMaterial } from '../../features/Bale/baleSlice';
 
-export default function Segregation({navigation}) {
+export default function NewBale({navigation}) {
   const dispatch = useDispatch();
   const [materialDetails, setMaterialDetails] = useState();
   // const [batch, setBatch] = useState();
   const [isSelected, setSelection] = useState(false);
-  const {segregationBatchList} = useSelector(state => state.segregation);
+  const {baleMaterial} = useSelector(state => state.bale);
   const [isChecked, setIsChecked] = useState(false);
   const [batch, setBatch] = useState();
+  const operators=['Karthi','Sabari']
+
   useEffect(() => {
-    dispatch(getSegregationBatchList());
-    console.log('materialList', segregationBatchList);
+    dispatch(getbaleMaterial());
+    console.log('baleMaterial', baleMaterial);
     // console.log("use effect",materialList[0].purchaseAndMaterial)
   }, [dispatch]);
 
@@ -33,23 +35,40 @@ export default function Segregation({navigation}) {
     <View className="mx-2 my-4 flex-1  rounded p-4 flex flex-col">
       <View className="border-b">
         <View className="flex-row items-center justify-between">
-          <Text className="text-lg font-semibold">Batch Id</Text>
+          <Text className="text-lg font-semibold">Operator</Text>
         </View>
         <Picker
           selectedValue={batch}
           onValueChange={value => handleMaterialChange(value)}>
-          {segregationBatchList &&
-            segregationBatchList.map((data, i) => (
+          {operators &&
+            operators.map((data, i) => (
               <Picker.Item
                 key={i}
                 name={i}
-                label={`${data.display_id} (${data.totalQuantity}kg)`}
-                value={data.batch_id}
+                label={`${data}`}
+                value={data}
               />
             ))}
         </Picker>
       </View>
-     
+      <View className="border-b mt-6">
+        <View className="flex-row items-center justify-between">
+          <Text className="text-lg font-semibold">Bale Material</Text>
+        </View>
+        <Picker
+          selectedValue={batch}
+          onValueChange={value => handleMaterialChange(value)}>
+          {baleMaterial &&
+            baleMaterial.map((data, i) => (
+              <Picker.Item
+                key={i}
+                name={i}
+                label={`${data.name})`}
+                value={data.id}
+              />
+            ))}
+        </Picker>
+      </View>
     </View>
 
    
@@ -59,34 +78,12 @@ export default function Segregation({navigation}) {
          className="bg-green-500 text-lg hover:bg-green-700
 font-bold py-2 px-3 rounded w-full "
          textColor="white"  onPress={() =>
-          navigation.navigate('SegregationDetail', {id: batch})
+          navigation.navigate('NewBale')
         }>
      
          Next {'>'}
        </Button>
      </TouchableOpacity>
      </>
-  );
+  )
 }
-const styles = StyleSheet.create({
-  fabContainer: {
-    position: 'absolute',
-    bottom: 30,
-    right: 28,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  checkbox: {
-    alignSelf: 'center',
-  },
-  label: {
-    margin: 8,
-  },
-});

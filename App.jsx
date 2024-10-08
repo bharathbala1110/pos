@@ -15,6 +15,14 @@ import {store} from './store/store';
 import NewBatch from './screens/Batches/NewBatch';
 import Segregation from './screens/Segregation/Segregation';
 import SegregationDetail from './screens/Segregation/SegregationDetail';
+import Bale from './screens/Bales/bale';
+import Sale from './screens/Sales/Sale';
+import NewBale from './screens/Bales/NewBale';
+import NewBale2 from './screens/Bales/NewBale2';
+import Baling from './screens/Bales/Baling';
+import OperatorSign from './screens/Bales/OperatorSign';
+import SupervisorSign from './screens/Bales/SupervisorSign';
+import PurchaseDetail from './screens/Purchases/PurchaseDetail';
 // import PurchaseConfirm from './screens/Purchases/PurchaseConfirm';
 // import PurchaseSignatory from './screens/Purchases/PurchaseSignatory';
 // import "react-native-devsettings";
@@ -31,10 +39,17 @@ export default function App() {
           <Stack.Screen name="Purchase" component={Purchase} />
           <Stack.Screen name="Batch" component={Batch} />
           <Stack.Screen name="Segregation" component={Segregation} />
+          <Stack.Screen name="Bale" component={Bale} />
+          <Stack.Screen name="NewBaling" component={NewBale} />
+          <Stack.Screen name="NewBale" component={NewBale2} />
+          <Stack.Screen name="Baling" component={Baling} />
+          <Stack.Screen name="Sales" component={Sale} />
           <Stack.Screen name="NewBatch" component={NewBatch} />
+          <Stack.Screen name="OperatorSignature" component={OperatorSign} />
+          <Stack.Screen name="SupervisorSignature" component={SupervisorSign} />
           <Stack.Screen
             name="PurchaseDetails"
-            component={Home}
+            component={PurchaseDetail}
             options={{title: 'Order Details'}}
           />
            <Stack.Screen

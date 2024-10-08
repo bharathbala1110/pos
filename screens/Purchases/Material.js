@@ -34,6 +34,7 @@ const Material = ({navigation}) => {
     //  dispatch(addMaterial(materialDetails))
     console.log('orderData', orderData);
     console.log('materialList', materialList);
+    console.log('materialDetails', materialDetails);
   }, []);
   const handleMaterialChange = (value, index) => {
     console.log('value', value);

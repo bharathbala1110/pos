@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import React, {useEffect} from 'react';
 import {Button, FAB} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBatchList} from '../../features/Batches/batchSlice';
 
@@ -45,7 +45,14 @@ useEffect(()=>{
         renderItem={({item}) => <Item item={item} />}
         keyExtractor={item => item.batch_id}
       />
-     
+      <View style={styles.fabContainer}>
+        <FAB
+          color="white"
+          icon={() => <Text className='text-white ml-2 w-11 h-10' >&#x2b;</Text>}
+          style={styles.fabStyle}
+          onPress={() => navigation.navigate('NewBatch')}
+        />
+      </View>
     </View>
   );
 };

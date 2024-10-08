@@ -11,15 +11,15 @@ const PurchaseConfirm=({navigation})=> {
       console.log(orderData)
     },[driverSignature])
     const [driverSignature,setDriverSignature]=useState('')
-    const [supplierSignature,setSupplierSignature]=useState('')
+    const [supervisorSignature,setSupervisorSignature]=useState('')
 
     const handleSignature = (signatureType, signatureValue) => {
      
         if (signatureType === "Driver") {
             setDriverSignature(signatureValue);
             dispatch(addDriverSign(signatureValue))
-        } else if (signatureType === "Supplier") {
-            setSupplierSignature(signatureValue);
+        } else if (signatureType === "Supervisor") {
+            setSupervisorSignature(signatureValue);
             dispatch(addSupplierSign(signatureValue))
         }
     };
@@ -57,20 +57,20 @@ const PurchaseConfirm=({navigation})=> {
     </View>
     <View className="flex-1 mx-2 mt-4">
       <View className="flex flex-row items-center justify-between">
-        <Text className="text-lg">Supplier Signature</Text>
+        <Text className="text-lg">Supervisor Signature</Text>
         <TouchableOpacity>
           <Button
             className="bg-green-500 text-lg hover:bg-green-700
      font-bold py-0 px-4 rounded"
             textColor="white"
-            onPress={()=>navigateToSignaturePage('Supplier')}
+            onPress={()=>navigateToSignaturePage('Supervisor')}
           >
             Add Signature
           </Button>
         </TouchableOpacity>
       </View>
       <View className='border-0.5 rounded mt-2 h-80'>
-      {supplierSignature && (<Image resizeMode={"contain"} source={{uri:supplierSignature}}   className='h-56 w-full object-cover '/>)}
+      {supervisorSignature && (<Image resizeMode={"contain"} source={{uri:supervisorSignature}}   className='h-56 w-full object-cover '/>)}
       </View>
     </View>
     </ScrollView>
